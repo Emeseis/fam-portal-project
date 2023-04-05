@@ -1,3 +1,4 @@
-// @use 'vuetify/_settings' with (
-//   $application-background: rgb(255, 255, 255)
-// );
+@use 'vuetify/_settings' with (
+  $application-background: #3F51B51A,  
+  $text-field-border-radius: 8px,
+);
