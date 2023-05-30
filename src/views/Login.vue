@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app-login">
     <v-container class="d-flex align-center justify-center" style="height: 100vh;">
       <div>
         <svg
@@ -27,6 +27,7 @@
           <v-form
             v-model="valid"
             @submit.prevent="onSubmit"
+            ref="form"
           >
             <v-row class="ma-0">
               <v-col cols="3" class="pa-0 pt-3">
@@ -79,7 +80,7 @@
             <v-row class="ma-0 my-n3">
               <v-col cols="3" class="pa-0"></v-col>
               <v-col cols="9" class="pa-0">
-                <v-checkbox label="Lembrar" color="#1B3556" class="text-white" style="margin-left: -11px;"></v-checkbox>
+                <v-checkbox v-model="remember" label="Lembrar" color="#1B3556" class="text-white" style="margin-left: -11px;"></v-checkbox>
               </v-col>
             </v-row>
             <v-btn
@@ -91,8 +92,8 @@
               size="default"
               type="submit"
               variant="elevated"
-              @click="onSubmit"
               style="text-transform: none"
+              :disabled="!valid"
             >
               Entrar na plataforma
             </v-btn>
@@ -106,26 +107,69 @@
         </v-card-text>
       </v-card>
     </v-container>
+    <v-dialog v-model="errorDialog.isDialog" width="800">
+      <v-alert :text="errorDialog.msg" type="error"></v-alert>
+    </v-dialog>
   </v-app>
 </template>
 
 <script setup>
-  import router from '@/router';
+  import { useRouter } from 'vue-router';
   import { ref, reactive } from 'vue';
+  // import axios from 'axios';
   
+  const remember = ref(true);
+  const form = ref(null);
+  const router = useRouter();
   const valid = ref(false)
   const cpf = ref(null);
   const pass = ref(null);
   const loading = ref(false);
   const showPass = ref(false);
 
+  const errorDialog = reactive({
+    isDialog: false,
+    msg: "",
+  });
+
   const rules = reactive({
     required: value => !!value || 'Campo obrigatório',
     length: value => value.length == 11 || 'É necessário ter 11 digitos',
   });
 
-  const onSubmit = () => {
+  const loginSuccess = (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
     router.push('/');
+  }
+
+  const onSubmit = async () => {
+    loading.value = true;
+
+    let user = {
+      Login: cpf.value,
+      Password: pass.value
+    }
+
+    form.value.validate()
+    
+    if (valid.value) {
+      // axios.post('url', user) //colocar a url certa
+      //   .then(response => {
+      //     if (response.data.rsl) {
+      //       loading.value = false;
+            loginSuccess(user);
+      //     } else {         
+      //       loading.value = false; 
+      //       localStorage.removeItem("user");
+      //       errorDialog.msg = 'Usuário ou senha incorreto!',
+      //       errorDialog.isDialog = true;
+      //     }
+      //   });
+    } else {
+      loading.value = false;
+      errorDialog.msg = 'Usuário ou senha preenchidos incorretamente.',
+      errorDialog.isDialog = true;
+    }
   };
 
   const forgotPass = () => {
@@ -144,20 +188,20 @@
 </style>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&display=swap');
-.fam {
-  font-family: 'Fira Sans Condensed' !important;
-}
-.v-container {
-  transform: scale(1);
-}
-.app {
-  background-color: #17518E;
-}
-.forgot {
-  text-decoration: underline !important;
-}
-.forgot:hover {
-  cursor: pointer;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&display=swap');
+  .fam {
+    font-family: 'Fira Sans Condensed' !important;
+  }
+  .v-container {
+    transform: scale(1);
+  }
+  .app-login {
+    background-color: #17518E;
+  }
+  .forgot {
+    text-decoration: underline !important;
+  }
+  .forgot:hover {
+    cursor: pointer;
+  }
 </style>

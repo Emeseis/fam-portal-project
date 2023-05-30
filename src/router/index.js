@@ -6,11 +6,13 @@ const router = createRouter({
     { path: '/', component: () => import('@/views/Home.vue') },
     { path: '/login', component: () => import('@/views/Login.vue') },
     { path: '/horarios', component: () => import('@/views/Horarios.vue') },
+    { path: '/faltas', component: () => import('@/views/Faltas.vue') },
+    { path: '/notas', component: () => import('@/views/Notas.vue') },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/', '/horarios']; //remover o '/' quando a autenticação estiver pronta
+  const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

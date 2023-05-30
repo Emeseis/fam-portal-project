@@ -3,13 +3,14 @@
     elevation="12"
     density="prominent"
     color="#1B3556"
+    height="56"
   >
     <img
       max-width="300"
       width="300" 
-      height="128"
+      height="96"
       src="@/assets/fam.svg"
-      class="ml-10"
+      class="ml-10 my-2"
     >  
     <div style="margin: auto">
       <v-btn
@@ -18,6 +19,7 @@
         size="x-large"
         class="mx-2"
         @click="$router.push('/')"
+        :ripple="false"
       >
         HOME
       </v-btn>
@@ -26,7 +28,8 @@
         color="white"
         size="x-large"
         class="mx-2"
-        disabled
+        @click="$router.push('/notas')"
+        :ripple="false"
       >
         NOTAS
       </v-btn>
@@ -35,7 +38,8 @@
         color="white"
         size="x-large"
         class="mx-2"
-        disabled
+        @click="$router.push('/faltas')"
+        :ripple="false"
       >
         FALTAS
       </v-btn>
@@ -43,19 +47,22 @@
         variant="plain"
         color="white"
         size="x-large"
-        class="mx-2"
-        disabled
+        class="ml-2"
+        @click="$router.push('/horarios')"
+        :ripple="false"
       >
-        EVENTOS
+        HORÁRIOS
       </v-btn>
       <v-btn
         variant="plain"
         color="white"
         size="x-large"
-        class="ml-2"
-        @click="$router.push('/horarios')"
+        class="mx-2"
+        @click="$router.push('/eventos')"
+        :ripple="false"
+        disabled
       >
-        HORÁRIOS
+        EVENTOS
       </v-btn>
     </div>
     <v-btn 
@@ -74,6 +81,7 @@
   const router = useRouter();
 
   const logout = () => {
+    localStorage.removeItem("user");
     router.push("/login");
   };
 </script>

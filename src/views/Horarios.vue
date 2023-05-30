@@ -1,6 +1,6 @@
 <template>
   <v-app class="app">
-    <AppBar></AppBar>
+    <AppBar/>
     <v-row style="flex: none;" class="mx-2 mt-2 mb-n5">
       <v-col cols="2" v-for="day in weekDays" :key="day" class="px-1 pt-0">
         <v-card rounded="lg" color="#1B3556" class="pa-2">
@@ -15,7 +15,7 @@
         <v-col cols="2" v-for="day in aulas" :key="day" class="py-0 px-1">
           <v-card v-for="aula in day" rounded="lg" color="#1B3556" class="pa-2 text-white my-2">
             <h4 class="text-center" :class="!aula.materia ? 'invisible' : ''">⠀{{ aula.materia }}⠀</h4>
-            <v-divider :thickness="3" style="opacity: 0.5;" class="mt-1 mb-2 rounded-lg" :class="!aula.materia ? 'invisible' : ''"></v-divider>
+            <v-divider :thickness="1" style="opacity: 0.5;" class="mt-1 mb-2 rounded-lg" :class="!aula.materia ? 'invisible' : ''"></v-divider>
             <div class="text-body-2 text-center" :class="!aula.materia ? 'invisible' : ''">Professor: {{ aula.prof }}</div>
             <div class="text-body-2 text-center" :class="!aula.materia ? 'invisible' : ''">Turma: {{ aula.turma }}</div>
             <div class="text-body-2 text-center" :class="!aula.materia ? 'invisible' : ''">{{ aula.curso }}</div>
@@ -74,10 +74,7 @@
   );
 </script>
 
-<style> 
- .app {
-    background-color: #60A4EC;
-  }
+<style scoped>
   .invisible {
     visibility: hidden;
   }
