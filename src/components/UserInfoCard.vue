@@ -1,7 +1,7 @@
-<template>  
-  <v-card 
-    color="#1B3556" 
-    rounded="lg" 
+<template>
+  <v-card
+    color="#1B3556"
+    rounded="lg"
     elevation="12"
     class="pa-4 text-center"
     height="409px"
@@ -11,27 +11,52 @@
     </v-avatar>
     <div class="mt-8">
       <span class="text-card">Associação Educacional Americanense</span>
-      <span class="text-card d-flex justify-start mt-2">Nome: {{ user.name }}</span>
-      <span class="text-card d-flex justify-start mt-2">RA: {{ user.ra }}</span>
-      <span class="text-card d-flex justify-start mt-2">Curso:  {{ user.course }}</span>
+      <span class="text-card d-flex justify-start mt-2"
+        >Nome: {{ state.name }}</span
+      >
+      <span class="text-card d-flex justify-start mt-2"
+        >RA: {{ state.ra }}</span
+      >
+      <span class="text-card d-flex justify-start mt-2"
+        >Curso: {{ state.course }}</span
+      >
     </div>
   </v-card>
 </template>
 
 <script setup>
-  import { reactive } from 'vue';
-  
-  let user = reactive({
-    name: '',
-    ra: '20230000',
-    course: 'Ciência da Computação'
-  });
+import { onBeforeMount, reactive } from "vue";
+
+let state = reactive({
+  name: "",
+  ra: "",
+  course: "",
+});
+
+// // axios.post('url', user) //colocar a url certa
+//   .then(response => {
+
+let response = {
+  data: {
+    name: "Guilherme Pedro Portugal",
+    registrationNumber: "45283546837",
+    course: "Ciencia da Computação",
+  },
+};
+
+onBeforeMount(() => {
+  let data = response.data;
+  state.name = data.name;
+  state.ra = data.registrationNumber;
+  state.course = data.course;
+  // console.log("teste", response.data);
+});
 </script>
 
 <style scoped>
-  .text-card {
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-  }
+.text-card {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
 </style>
