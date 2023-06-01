@@ -33,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in response.data.shedules" :key="item.name">
+              <tr v-for="item in state.table" :key="item.name">
                 <td>{{ item.description }}</td>
                 <td>{{ item.workload }}</td>
                 <td>{{ item.totalabsences }}</td>
